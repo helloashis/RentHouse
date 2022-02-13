@@ -64,6 +64,11 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
         Route::post('/location/divisions/add-district','DivisionController@addDist')->name('add.district');
 
+        Route::get('/location/upzilla/manage','UpzillaController@index')->name('upzilla.manage');
+
+        Route::post('/location/upzilla/add','UpzillaController@addZilla')->name('add.zilla');
+        Route::get('/finddistrict/{id}','DivisionController@myformAjax');
+
 
 
 

@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{ asset('backend') }}/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('backend') }}/css/adminlte.min.css">
+  <link rel="stylesheet" href="{{ asset('backend') }}/css/tree.min.css">
 
   <link rel="stylesheet" href="{{ asset('backend') }}/sweetalert2/sweetalert2.min.css">
   <link href="{{ asset('backend') }}/toastr/toastr.css" rel="stylesheet" />
@@ -160,9 +161,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('posts.manage') }}" class="nav-link {{ request()->is('admin/posts/padding-posts') ? 'active':'' }}">
+                        <a href="{{ route('upzilla.manage') }}" class="nav-link {{ request()->is('admin/location/upzilla/manage') ? 'active':'' }}">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Manage City/Area</p>
+                        <p>Manage City/Upzilla</p>
                         </a>
                     </li>
                 </ul>
@@ -264,7 +265,41 @@
 <script src="{{ asset('backend') }}/bootstrap/bootstrap-tagsinput.min.js"></script>
 <script>
   
-    
+    $(document).ready(function() {
+        var loader = $('#loader'),
+            district = $('#district');
+            district.attr('disabled','disabled');
+            loader.hide();
+        $('select[name="division"]').on('change', function() {
+            
+            var divID = $(this).val();
+            loader.show();
+            district.attr('disabled','disabled');
+            if(divID) {
+                $.ajax({
+                    url: '/admin/finddistrict/'+divID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="district"]').empty();
+                        $('select[name="district"]').append('<option value="" selected>===Select District===</option>');
+                        $.each(data, function(key, value) {
+                            $('select[name="district"]').append('<option value="'+ value.id +'">'+ value.title +'</option>');
+                        });
+                        loader.hide();
+                        district.removeAttr('disabled');
+
+
+                    }
+
+
+                });
+            }else{
+                $('select[name="district"]').empty();
+            }
+        });
+    });
 
  
     $(document).ready(function() {
