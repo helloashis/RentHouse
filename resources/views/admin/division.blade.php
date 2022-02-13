@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label for="district">District</label>
                                 <br>
-                                <select name="" multiple data-role="tagsinput">
+                                <select name="dist[]" multiple data-role="tagsinput">
                                 </select>
 
                             </div>

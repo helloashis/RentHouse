@@ -58,8 +58,25 @@ class DivisionController extends Controller
     public function addDist(Request $request)
     {
 
-        return $request->all();
+        $data = $request->all();
+        for ($i = 0; $i < count($request->dist); $i++) {
+            $dist[] = [
+                'division_id' => $request->division,
+                'title' => $request->dist[$i],
+                'status' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+        }
+        $result = District::insert($dist);
 
+        if ($result) {
+            return Redirect()->route('divisions.manage')->with('success',"Districts added succesfully!");
+        } else {
+            return Redirect()->route('divisions.manage')->with('failed',"Con\'t district added!");
+        }
+
+        
     }
 
 

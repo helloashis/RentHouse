@@ -8,7 +8,7 @@ use App\User;
 class District extends Model
 {
     protected $fillable = [
-        'name','division_id', 'status',
+        'title','division_id', 'status',
     ];
 
 }
